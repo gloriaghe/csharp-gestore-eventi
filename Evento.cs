@@ -69,7 +69,7 @@
 
     public void PrenotaPosti(int postiAggiunti)
     {
-        if (Data < oggi || PostiPrenotati == PostiMassimiCapienza || PostiMassimiCapienza > (PostiPrenotati + postiAggiunti) )
+        if (Data < oggi || PostiPrenotati == PostiMassimiCapienza  ||PostiMassimiCapienza < (PostiPrenotati + postiAggiunti))
             throw new GestoreEventiException("L'evento è già passato o non ci sono posti a sufficenza");
         _postiPrenotati += postiAggiunti;
         
