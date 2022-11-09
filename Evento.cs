@@ -4,6 +4,7 @@
     private DateOnly _data;
     private int _postiMassimiCapienza;
     private int _postiPrenotati;
+    public DateOnly oggi = DateOnly.FromDateTime(DateTime.Now);
 
     public string Titolo
     {
@@ -26,7 +27,6 @@
         }
         set
         {
-            DateOnly oggi = DateOnly.FromDateTime(DateTime.Now);
             if (value == null || value < oggi)
                 throw new GestoreEventiException("La data non può essere precendete ad oggi");
             _data = value;
@@ -67,4 +67,22 @@
         PostiPrenotati = 0;
     }
 
+    public void PrenotaPosti(int postiAggiunti)
+    {
+        if (Data < oggi || PostiPrenotati == PostiMassimiCapienza || PostiMassimiCapienza > (PostiPrenotati + postiAggiunti) )
+            throw new GestoreEventiException("L'evento è già passato o non ci sono posti a sufficenza");
+        _postiPrenotati += postiAggiunti;
+        
+    }
+    public void DisdiciPosti(int postiDisdetti)
+    {
+        if (Data < oggi || PostiPrenotati < postiDisdetti)
+            throw new GestoreEventiException("L'evento è già passato o non ci sono posti da disdire a sufficenza");
+        _postiPrenotati = _postiPrenotati - postiDisdetti;
+    }
+
+    public override string ToString()
+    {
+        return _data.ToString("dd/MM/yyyy") + " - " + Titolo;
+    }
 }
