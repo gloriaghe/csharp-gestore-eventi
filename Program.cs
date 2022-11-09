@@ -1,6 +1,6 @@
 ﻿using System;
 
-Console.WriteLine("Vuoi creare un nuovo Evento? Digita SI o NO");
+Console.Write("Vuoi creare un nuovo Evento? Digita SI o NO: ");
 string sceltaUser = Console.ReadLine();
 if (sceltaUser == "SI")
 {
@@ -43,16 +43,22 @@ if (sceltaUser == "SI")
         }
     }
     Evento evento = new Evento(titolo, dataonly, postiMassimi);
-    Console.Write("Evento creato. Vuoi prenotare dei posti? SI o NO");
+
+
+    Console.Write("Evento creato. Vuoi prenotare dei posti? (SI o NO)   ");
     sceltaUser = Console.ReadLine();
+
+
     if (sceltaUser == "SI")
     {
         Console.Write("Quanti posti vuoi prenotare? ");
+
         while (continua)
         {
             try
             {
                 postiPrenotati = Convert.ToInt32(Console.ReadLine());
+
                 continua = false;
             }
             catch (FormatException)
@@ -64,14 +70,38 @@ if (sceltaUser == "SI")
                 Console.WriteLine("Errore di inserimento");
             }
         }
-                evento.PrenotaPosti(postiPrenotati);
+        evento.PrenotaPosti(postiPrenotati);
+        Console.WriteLine("Numero di posti disponibili: " + (evento.PostiMassimiCapienza - evento.PostiPrenotati));
+        Console.WriteLine("Numero di posti prenotati: " + evento.PostiPrenotati);
+
     }
     else
     {
         Console.WriteLine("Ok. Nessun posto prenotato!");
+
     }
-    Console.WriteLine("Numero di posti disponibili: " + (evento.PostiMassimiCapienza - evento.PostiPrenotati));
-    Console.WriteLine("Numero di posti prenotati: " + evento.PostiPrenotati);
+    bool postiDisdetti = true;
+    while (postiDisdetti)
+    {
+        Console.Write("Vuoi disdire dei posti? SI/NO ");
+        sceltaUser = Console.ReadLine();
+        if(sceltaUser == "SI")
+        {
+            Console.Write("Quanti posti vuoi disdire? ");
+            int numDisdetti = Convert.ToInt32(Console.ReadLine());
+            evento.DisdiciPosti(numDisdetti);
+            Console.WriteLine("Numero di posti disponibili: " + (evento.PostiMassimiCapienza - evento.PostiPrenotati));
+            Console.WriteLine("Numero di posti prenotati: " + evento.PostiPrenotati);
+        }
+        else
+        {
+            Console.Write("Nessun posto disdetto!");
+            postiDisdetti = false;
+
+        }
+    }
+
+
 }
 else
 {
