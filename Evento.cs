@@ -86,17 +86,21 @@ public class Evento
     public override string ToString()
     {
         return Titolo+ ","+ _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza+ ","+ PostiPrenotati;
-        //string stringa = "------ Evento ------\n";
-        //stringa += "Titolo:\t" + this.Titolo + "\n";
-        //stringa += "Autore:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
-        //stringa += "Posti Massimi Capienza:\t" + this.PostiMassimiCapienza + "\n";
-        //stringa += "Posti Prenotati:\t" + this.PostiPrenotati + "\n";
-        //stringa += "-------------------";
-        //return stringa;
+        
     }
    public string StampCSV()
     {
         return Titolo + "," + _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza + "," + PostiPrenotati;
 
+    }
+    public string StampaOrdinato()
+    {
+        string stringa = "------ Evento ------\n";
+        stringa += "Titolo:\t" + this.Titolo + "\n";
+        stringa += "Autore:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
+        stringa += "Posti Massimi Capienza:\t" + this.PostiMassimiCapienza + "\n";
+        stringa += "Posti Prenotati:\t" + this.PostiPrenotati + "\n";
+        stringa += "-------------------";
+        return stringa;
     }
 }

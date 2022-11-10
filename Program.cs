@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 Console.WriteLine("Premi 1 se vuoi creare un programma Eventi ");
 Console.WriteLine("Premi 2 se vuoi creare un Evento singolo");
+Console.WriteLine("Premi 3 se vuoi generare l'import del programma eventi in formato csv");
 
 int sceltaUserMenù = Convert.ToInt32(Console.ReadLine());
 List<Evento> programmi = new List<Evento>();
@@ -186,7 +187,7 @@ if (sceltaUserMenù == 1)
     string userCsv = Console.ReadLine();
     if (userCsv == "SI")
     {
-        StreamWriter fileDaScrivere = File.CreateText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati.txt");
+        StreamWriter fileDaScrivere = File.CreateText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati.csv");
 
         fileDaScrivere.WriteLine("titolo,data,capienza massima,posti prenotati");
 
@@ -197,17 +198,6 @@ if (sceltaUserMenù == 1)
 
         }
         fileDaScrivere.Close();
-
-    }
-    else
-    {
-        Console.WriteLine("Ok, ciao!");
-    }
-
-    Console.WriteLine("Vuoi generare l'import del programma eventi in formato csv? SI/NO ");
-    string userImportCsv = Console.ReadLine();
-    if (userImportCsv == "SI")
-    {
 
     }
     else
@@ -366,4 +356,42 @@ else if (sceltaUserMenù == 2)
         }
     }
 
+}
+else if (sceltaUserMenù == 3)
+{
+    StreamReader stream = File.OpenText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati.csv");
+
+    List<Evento> eventi = new List<Evento>();
+    stream.ReadLine();
+    while (!stream.EndOfStream)
+    {
+        string riga = stream.ReadLine();
+
+        string[] infoEvento = riga.Split(",");
+
+        //abbaimo 4 informazioni che DEVONO essere correttamente strutturate nel file
+        if (infoEvento.Length == 4)
+        {
+            string titolo = infoEvento[0];
+            DateOnly dataonly = DateOnly.Parse(infoEvento[1]);
+            DateOnly data = dataonly;
+            int postiMassimiCapienza = infoEvento[2] == "" ? 0 : Convert.ToInt32(infoEvento[2]);
+            int postiPrenotati = infoEvento[3] == "" ? 0 : Convert.ToInt32(infoEvento[3]);
+
+
+
+            Evento evento = new Evento(titolo, data, postiMassimiCapienza);
+            evento.PrenotaPosti(postiPrenotati);
+
+            Console.WriteLine(evento.StampaOrdinato());
+            eventi.Add(evento);
+        }
+
+    }
+
+    stream.Close();
+}
+else
+{
+    Console.Write("Nessuna scelta!");
 }
