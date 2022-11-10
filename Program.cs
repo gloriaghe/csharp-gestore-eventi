@@ -397,20 +397,22 @@ else if (sceltaUserMenù == 3)
                 int postiPrenotati = infoEvento[3] == "" ? 0 : Convert.ToInt32(infoEvento[3]);
                 string relatore = infoEvento[4];
                 double prezzo = Convert.ToDouble(infoEvento[5]);
-                
 
-                if (prezzo == 0 && relatore == "nessun Relatore")
+
+                if (infoEvento[4] == "nessun Relatore")
+                {
                     evento = new Evento(titolo, data, postiMassimiCapienza);
+                    evento.PrenotaPosti(postiPrenotati);
+                    Console.WriteLine(evento.StampaOrdinato());
+                    eventi.Add(evento);
+                }
                 else
+                {
                     conferenza = new Conferenza(titolo, data, postiMassimiCapienza, relatore, prezzo);
-                evento.PrenotaPosti(postiPrenotati);
-                conferenza.PrenotaPosti(postiPrenotati);
-
-                Console.WriteLine(evento.StampaOrdinato());
-                Console.WriteLine(conferenza.StampaOrdinato());
-
-                eventi.Add(evento);
-                eventi.Add(conferenza);
+                    conferenza.PrenotaPosti(postiPrenotati);
+                    Console.WriteLine(conferenza.StampaOrdinato());
+                    eventi.Add(conferenza);
+                }
 
             }
         }

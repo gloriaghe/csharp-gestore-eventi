@@ -97,7 +97,7 @@ public class Evento
     {
         string stringa = "------ Evento ------\n";
         stringa += "Titolo:\t" + this.Titolo + "\n";
-        stringa += "Autore:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
+        stringa += "Data:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
         stringa += "Posti Massimi Capienza:\t" + this.PostiMassimiCapienza + "\n";
         stringa += "Posti Prenotati:\t" + this.PostiPrenotati + "\n";
         stringa += "-------------------";

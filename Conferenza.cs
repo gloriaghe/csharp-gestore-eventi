@@ -61,9 +61,10 @@ public class Conferenza : Evento
     }
     public override string StampaOrdinato()
     {
-        string stringa = "------ Evento ------\n";
+        string stringa = "------ Conferenza ------\n";
         stringa += "Titolo:\t" + this.Titolo + "\n";
-        stringa += "Autore:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
+        stringa += "Data:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
+        stringa += "Autore:\t" + this.Relatore + "\n";
         stringa += "Posti Massimi Capienza:\t" + this.PostiMassimiCapienza + "\n";
         stringa += "Posti Prenotati:\t" + this.PostiPrenotati + "\n";
         stringa += "Prezzo:\t" + this.Prezzo + "\n";
