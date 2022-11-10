@@ -1,7 +1,7 @@
 ﻿using System;
 
 Console.WriteLine("Premi 1 se vuoi creare un programma Eventi ");
-Console.WriteLine("Premi 2 se vuoi creare un Evento singolo ");
+Console.WriteLine("Premi 2 se vuoi creare un Evento singolo");
 
 int sceltaUserMenù = Convert.ToInt32(Console.ReadLine());
 
@@ -34,71 +34,65 @@ if (sceltaUserMenù == 1)
     }
     for (int i = 0; i < numeroEventi; i++)
     {
-        Console.WriteLine();
-        bool continua = false;
-        string titolo = "";
+        bool generaEventoCorretto = true;
 
-        Console.Write("Inserisci il titolo del {0}° Evento: ", i + 1);
-                titolo = Console.ReadLine();
-        while (!continua)
+        while (generaEventoCorretto)
         {
+
             try
             {
-                if(titolo == "" || titolo == null)
+                Console.WriteLine();
+                bool continua = true;
+
+                Console.Write("Inserisci il titolo del {0}° Evento: ", i + 1);
+                string titolo = Console.ReadLine();
+
+                DateOnly dataonly = new DateOnly();
+                int postiMassimi = 0;
+                int postiPrenotati = 0;
+
+                while (continua)
                 {
-
+                    try
+                    {
+                        Console.Write("Inserisci la data dell'evento (gg/mm/yyyy): ");
+                        string data = Console.ReadLine();
+                        dataonly = DateOnly.Parse(data);
+                        continua = false;
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("error: devi inserire un valore adatto ad una data ");
+                    }
                 }
-                continua = true;
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine("error: devi inserire un valore adatto ");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("ERRORE");
-            }
-        }
-        DateOnly dataonly = new DateOnly();
-        int postiMassimi = 0;
-        int postiPrenotati = 0;
 
-        while (continua)
-        {
-            try
-            {
-                Console.Write("Inserisci la data dell'evento (gg/mm/yyyy): ");
-                string data = Console.ReadLine();
-                dataonly = DateOnly.Parse(data);
-                continua = false;
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("error: devi inserire un valore adatto ad una data ");
-            }
-        }
-        while (!continua)
-        {
-            try
-            {
+
                 Console.Write("Inserisci i posti totali dell'Evento: ");
                 postiMassimi = Convert.ToInt32(Console.ReadLine());
                 continua = true;
+
+                Evento evento = null;
+
+
+                evento = new Evento(titolo, dataonly, postiMassimi);
+                programmaevento.AggiuntaEvento(evento);
+                generaEventoCorretto = false;
             }
             catch (FormatException)
             {
                 Console.WriteLine("error: devi inserire un numero");
             }
+            catch (GestoreEventiException)
+            {
+                Console.WriteLine("Le informazioni inserite non sono corrette ricrea l'evento");
+            }
             catch (Exception)
             {
-                Console.WriteLine("Errore di inserimento");
+                Console.WriteLine("C'è stao un'errore... ricreo l'evento");
+
             }
         }
-        Evento evento = new Evento(titolo, dataonly, postiMassimi);
-
-        programmaevento.AggiuntaEvento(evento);
     }
-
     Console.WriteLine();
     Console.WriteLine("Il numero di eventi nel programma è: " + numeroEventi);
     Console.WriteLine("Ecco il programma completo: ");
@@ -121,7 +115,6 @@ else if (sceltaUserMenù == 2)
         Console.WriteLine();
         Console.Write("Inserisci il titolo dell'Evento: ");
         string titolo = Console.ReadLine();
-        Prenota(titolo);
 
         bool continua = true;
         DateOnly dataonly = new DateOnly();
@@ -224,9 +217,4 @@ else if (sceltaUserMenù == 2)
     {
         Console.WriteLine("A presto!");
     }
-}
-
-void Prenota(string titolo)
-{
-
 }
