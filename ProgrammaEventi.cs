@@ -2,15 +2,29 @@
 
 public class ProgrammaEventi
 {
-    public string Titolo;
+    //public string Titolo;
+    private string _titolo;
+
     public List<Evento> eventi;
 
+    public string Titolo
+    {
+        get
+        {
+            return _titolo;
+        }
+        set
+        {
+            if (value == null || value == "")
+                throw new GestoreEventiException("Il nome non può essere vuoto");
+            _titolo = value;
+        }
+    }
     public ProgrammaEventi(string titolo)
     {
         Titolo = titolo;
         eventi = new List<Evento>();
     }
-
     public void AggiuntaEvento(Evento evento)
     {
         eventi.Add(evento);

@@ -1,9 +1,11 @@
 ﻿using System;
 
-Console.Write("Vuoi creare un programma Eventi? SI/NO  ");
-string sceltaUser = Console.ReadLine();
+Console.WriteLine("Premi 1 se vuoi creare un programma Eventi ");
+Console.WriteLine("Premi 2 se vuoi creare un Evento singolo ");
 
-if (sceltaUser == "SI")
+int sceltaUserMenù = Convert.ToInt32(Console.ReadLine());
+
+if (sceltaUserMenù == 1)
 {
     Console.WriteLine();
 
@@ -12,12 +14,51 @@ if (sceltaUser == "SI")
 
     ProgrammaEventi programmaevento = new ProgrammaEventi(nomeProgramma);
     Console.Write("Quanti Eventi vuoi inserire? ");
-    int numeroEventi = Convert.ToInt32(Console.ReadLine());
-    for (int i = 0; i < numeroEventi ; i++){
+    bool numeroeventiOK = true;
+    int numeroEventi = 0;
+    while (numeroeventiOK)
+    {
+        try
+        {
+            numeroEventi = Convert.ToInt32(Console.ReadLine());
+            numeroeventiOK = false;
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("error: devi inserire un valore adatto ad una data ");
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("Errore di inserimento");
+        }
+    }
+    for (int i = 0; i < numeroEventi; i++)
+    {
         Console.WriteLine();
-        Console.Write("Inserisci il titolo del {0}° Evento: ", i+1);
-        string titolo = Console.ReadLine();
-        bool continua = true;
+        bool continua = false;
+        string titolo = "";
+
+        Console.Write("Inserisci il titolo del {0}° Evento: ", i + 1);
+                titolo = Console.ReadLine();
+        while (!continua)
+        {
+            try
+            {
+                if(titolo == "" || titolo == null)
+                {
+
+                }
+                continua = true;
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("error: devi inserire un valore adatto ");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("ERRORE");
+            }
+        }
         DateOnly dataonly = new DateOnly();
         int postiMassimi = 0;
         int postiPrenotati = 0;
@@ -57,7 +98,7 @@ if (sceltaUser == "SI")
 
         programmaevento.AggiuntaEvento(evento);
     }
-    
+
     Console.WriteLine();
     Console.WriteLine("Il numero di eventi nel programma è: " + numeroEventi);
     Console.WriteLine("Ecco il programma completo: ");
@@ -71,9 +112,10 @@ if (sceltaUser == "SI")
 
     Console.WriteLine(ProgrammaEventi.StampaEventi(programmiDataSpecifica));
 }
-else { 
+else if (sceltaUserMenù == 2)
+{
     Console.Write("Vuoi creare un nuovo Evento? Digita SI o NO: ");
-    sceltaUser = Console.ReadLine();
+    string sceltaUser = Console.ReadLine();
     if (sceltaUser == "SI")
     {
         Console.WriteLine();
@@ -184,7 +226,7 @@ else {
     }
 }
 
- void Prenota(string titolo)
+void Prenota(string titolo)
 {
-   
+
 }
