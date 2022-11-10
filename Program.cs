@@ -365,6 +365,9 @@ else if (sceltaUserMenù == 3)
     stream.ReadLine();
     while (!stream.EndOfStream)
     {
+        try
+        {
+       
         string riga = stream.ReadLine();
 
         string[] infoEvento = riga.Split(",");
@@ -386,7 +389,11 @@ else if (sceltaUserMenù == 3)
             Console.WriteLine(evento.StampaOrdinato());
             eventi.Add(evento);
         }
-
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Errore: " + e.Message);
+        }
     }
 
     stream.Close();
