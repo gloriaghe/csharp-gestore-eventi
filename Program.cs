@@ -187,18 +187,24 @@ if (sceltaUserMenù == 1)
     string userCsv = Console.ReadLine();
     if (userCsv == "SI")
     {
-        StreamWriter fileDaScrivere = File.CreateText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati.csv");
-
-        fileDaScrivere.WriteLine("titolo,data,capienza massima,posti prenotati");
-
-        foreach (Evento evento in programmi)
+        try
         {
+            StreamWriter fileDaScrivere = File.CreateText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati2.csv");
 
-            fileDaScrivere.WriteLine(evento.StampCSV());
+            fileDaScrivere.WriteLine("titolo,data,capienza massima,posti prenotati");
 
+            foreach (Evento evento in programmi)
+            {
+
+                fileDaScrivere.WriteLine(evento.StampCSV());
+
+            }
+            fileDaScrivere.Close();
         }
-        fileDaScrivere.Close();
-
+        catch (Exception e)
+        {
+            Console.WriteLine("Errore: " + e.Message);
+        }
     }
     else
     {
@@ -367,28 +373,28 @@ else if (sceltaUserMenù == 3)
     {
         try
         {
-       
-        string riga = stream.ReadLine();
 
-        string[] infoEvento = riga.Split(",");
+            string riga = stream.ReadLine();
 
-        //abbaimo 4 informazioni che DEVONO essere correttamente strutturate nel file
-        if (infoEvento.Length == 4)
-        {
-            string titolo = infoEvento[0];
-            DateOnly dataonly = DateOnly.Parse(infoEvento[1]);
-            DateOnly data = dataonly;
-            int postiMassimiCapienza = infoEvento[2] == "" ? 0 : Convert.ToInt32(infoEvento[2]);
-            int postiPrenotati = infoEvento[3] == "" ? 0 : Convert.ToInt32(infoEvento[3]);
+            string[] infoEvento = riga.Split(",");
+
+            //abbaimo 4 informazioni che DEVONO essere correttamente strutturate nel file
+            if (infoEvento.Length == 4)
+            {
+                string titolo = infoEvento[0];
+                DateOnly dataonly = DateOnly.Parse(infoEvento[1]);
+                DateOnly data = dataonly;
+                int postiMassimiCapienza = infoEvento[2] == "" ? 0 : Convert.ToInt32(infoEvento[2]);
+                int postiPrenotati = infoEvento[3] == "" ? 0 : Convert.ToInt32(infoEvento[3]);
 
 
 
-            Evento evento = new Evento(titolo, data, postiMassimiCapienza);
-            evento.PrenotaPosti(postiPrenotati);
+                Evento evento = new Evento(titolo, data, postiMassimiCapienza);
+                evento.PrenotaPosti(postiPrenotati);
 
-            Console.WriteLine(evento.StampaOrdinato());
-            eventi.Add(evento);
-        }
+                Console.WriteLine(evento.StampaOrdinato());
+                eventi.Add(evento);
+            }
         }
         catch (Exception e)
         {
