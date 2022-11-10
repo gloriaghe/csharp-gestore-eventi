@@ -1,0 +1,5 @@
+titolo,data,capienza massima,posti prenotati
+La musica nella natura,11/11/2024,100,0
+Musica per Bambini,12/02/2023,140,0
+Musica per tutti,28/09/2023,180,0
+Conferenza sulla musica,18/02/2023,70,0

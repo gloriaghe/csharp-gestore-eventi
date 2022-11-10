@@ -5,6 +5,7 @@ Console.WriteLine("Premi 1 se vuoi creare un programma Eventi ");
 Console.WriteLine("Premi 2 se vuoi creare un Evento singolo");
 
 int sceltaUserMenù = Convert.ToInt32(Console.ReadLine());
+List<Evento> programmi = new List<Evento>();
 
 if (sceltaUserMenù == 1)
 {
@@ -79,6 +80,8 @@ if (sceltaUserMenù == 1)
                 evento = new Evento(titolo, dataonly, postiMassimi);
                 programmaevento.AggiuntaEvento(evento);
                 generaEventoCorretto = false;
+                programmi.Add(evento);
+
             }
             catch (FormatException)
             {
@@ -158,6 +161,7 @@ if (sceltaUserMenù == 1)
             conferenza = new Conferenza(titolo, dataonly, postiMassimi, relatore, prezzo);
             programmaevento.AggiuntaEvento(conferenza);
             generaConferenza = false;
+            programmi.Add(conferenza);
 
         }
         catch (FormatException)
@@ -175,9 +179,41 @@ if (sceltaUserMenù == 1)
         }
     }
     Console.WriteLine();
-    List<Evento> programmi = new List<Evento>();
     Console.WriteLine(programmaevento);
-    
+
+    //EXPORT CSV
+    Console.WriteLine("Vuoi generare l'export del programma eventi in formato csv? SI/NO ");
+    string userCsv = Console.ReadLine();
+    if (userCsv == "SI")
+    {
+        StreamWriter fileDaScrivere = File.CreateText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati.txt");
+
+        fileDaScrivere.WriteLine("titolo,data,capienza massima,posti prenotati");
+
+        foreach (Evento evento in programmi)
+        {
+
+            fileDaScrivere.WriteLine(evento.StampCSV());
+
+        }
+        fileDaScrivere.Close();
+
+    }
+    else
+    {
+        Console.WriteLine("Ok, ciao!");
+    }
+
+    Console.WriteLine("Vuoi generare l'import del programma eventi in formato csv? SI/NO ");
+    string userImportCsv = Console.ReadLine();
+    if (userImportCsv == "SI")
+    {
+
+    }
+    else
+    {
+        Console.WriteLine("Ok, ciao!");
+    }
 }
 
 

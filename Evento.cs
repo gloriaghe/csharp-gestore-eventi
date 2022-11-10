@@ -1,4 +1,6 @@
-﻿public class Evento
+﻿using Microsoft.VisualBasic;
+
+public class Evento
 {
     private string _titolo;
     private DateOnly _data;
@@ -83,6 +85,18 @@
 
     public override string ToString()
     {
-        return _data.ToString("dd/MM/yyyy") + " - " + Titolo;
+        return Titolo+ ","+ _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza+ ","+ PostiPrenotati;
+        //string stringa = "------ Evento ------\n";
+        //stringa += "Titolo:\t" + this.Titolo + "\n";
+        //stringa += "Autore:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
+        //stringa += "Posti Massimi Capienza:\t" + this.PostiMassimiCapienza + "\n";
+        //stringa += "Posti Prenotati:\t" + this.PostiPrenotati + "\n";
+        //stringa += "-------------------";
+        //return stringa;
+    }
+   public string StampCSV()
+    {
+        return Titolo + "," + _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza + "," + PostiPrenotati;
+
     }
 }
