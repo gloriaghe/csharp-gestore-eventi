@@ -49,9 +49,13 @@ public class ProgrammaEventi
         {
             stringa += item + "\n";
         }
+        if(stringa == "")
+        {
+            return "Nessun evento in programma per quella data";
+        }
             return stringa;
     }
-
+ 
     public int NumeroEventi()
     {
         return eventi.Count;

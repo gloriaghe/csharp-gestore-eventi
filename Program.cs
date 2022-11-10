@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 Console.WriteLine("Premi 1 se vuoi creare un programma Eventi ");
 Console.WriteLine("Premi 2 se vuoi creare un Evento singolo");
@@ -16,6 +17,7 @@ if (sceltaUserMenù == 1)
     Console.Write("Quanti Eventi vuoi inserire? ");
     bool numeroeventiOK = true;
     int numeroEventi = 0;
+
     while (numeroeventiOK)
     {
         try
@@ -105,17 +107,86 @@ if (sceltaUserMenù == 1)
     List<Evento> programmiDataSpecifica = programmaevento.DataEventi(datascelta);
 
     Console.WriteLine(ProgrammaEventi.StampaEventi(programmiDataSpecifica));
+
+    //conferenza
+    Console.Write("Ora aggiungi una conferenza:");
+    Console.WriteLine();
+
+    bool generaConferenza = true;
+
+    while (generaConferenza)
+    {
+
+        try
+        {
+            Console.WriteLine();
+            bool continua = true;
+
+            Console.Write("Inserisci il titolo della conferenza: ");
+            string titolo = Console.ReadLine();
+
+            DateOnly dataonly = new DateOnly();
+            int postiMassimi = 0;
+            int postiPrenotati = 0;
+
+            while (continua)
+            {
+                try
+                {
+                    Console.Write("Inserisci la data (gg/mm/yyyy): ");
+                    string data = Console.ReadLine();
+                    dataonly = DateOnly.Parse(data);
+                    continua = false;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("error: devi inserire un valore adatto ad una data ");
+                }
+            }
+
+
+            Console.Write("Inserisci i posti totali: ");
+            postiMassimi = Convert.ToInt32(Console.ReadLine());
+            continua = true;
+            Console.Write("Inserisci il relatore: ");
+            string relatore = (Console.ReadLine());
+            Console.Write("Inserisci il prezzo del biglietto: ");
+            double prezzo = Convert.ToInt32(Console.ReadLine());
+            Conferenza conferenza = null;
+
+
+            conferenza = new Conferenza(titolo, dataonly, postiMassimi, relatore, prezzo);
+            programmaevento.AggiuntaEvento(conferenza);
+            generaConferenza = false;
+
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("error: devi inserire un numero");
+        }
+        catch (GestoreEventiException)
+        {
+            Console.WriteLine("Le informazioni inserite non sono corrette ricrea l'evento");
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("C'è stao un'errore... ricreo l'evento");
+
+        }
+    }
+    Console.WriteLine();
+    List<Evento> programmi = new List<Evento>();
+    Console.WriteLine(programmaevento);
+    
 }
+
+
+
 else if (sceltaUserMenù == 2)
 {
-    //Console.Write("Vuoi creare un nuovo Evento? Digita SI o NO: ");
-    //string sceltaUser = Console.ReadLine();
     Evento evento = null;
     int postiPrenotati = 0;
 
-
-    //if (sceltaUser == "SI")
-    //{
     bool eventoOK = true;
     while (eventoOK)
     {
@@ -144,23 +215,10 @@ else if (sceltaUserMenù == 2)
                     Console.WriteLine("error: devi inserire un valore adatto ad una data ");
                 }
             }
-            //while (!continua)
-            //{
-            //    try
-            //    {
+
             Console.Write("Inserisci i posti totali dell'Evento: ");
             postiMassimi = Convert.ToInt32(Console.ReadLine());
-            //continua = true;
-            //    }
-            //    catch (FormatException)
-            //    {
-            //        Console.WriteLine("error: devi inserire un numero");
-            //    }
-            //    catch (Exception)
-            //    {
-            //        Console.WriteLine("Errore di inserimento");
-            //    }
-            //}
+
             evento = new Evento(titolo, dataonly, postiMassimi);
             eventoOK = false;
 
@@ -256,7 +314,7 @@ else if (sceltaUserMenù == 2)
             }
             Console.WriteLine("Numero di posti disponibili: " + (evento.PostiMassimiCapienza - evento.PostiPrenotati));
             Console.WriteLine("Numero di posti prenotati: " + evento.PostiPrenotati);
-            if(evento.PostiPrenotati == 0)
+            if (evento.PostiPrenotati == 0)
             {
                 Console.WriteLine("Hai disdetto tutti i posti!");
                 postiDisdetti = false;
@@ -272,10 +330,4 @@ else if (sceltaUserMenù == 2)
         }
     }
 
-
-    //}
-    //else
-    //{
-    //    Console.WriteLine("A presto!");
-    //}
 }

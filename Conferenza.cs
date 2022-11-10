@@ -52,6 +52,6 @@ public class Conferenza : Evento
     }
     public override string ToString()
     {
-        return Data.ToString("dd/MM/yyyy") + " - " + Titolo + " - " + _relatore + " - " + PrezzoFormattato();
+        return Data.ToString("dd/MM/yyyy") + " - " + Titolo + " - " + _relatore + " - " + PrezzoFormattato() + " Euro ";
     }
 }
