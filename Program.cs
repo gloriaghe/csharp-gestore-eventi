@@ -7,6 +7,7 @@ Console.WriteLine("Premi 3 se vuoi generare l'import del programma eventi in for
 
 int sceltaUserMenù = Convert.ToInt32(Console.ReadLine());
 List<Evento> programmi = new List<Evento>();
+List<Conferenza> listaConferenza = new List<Conferenza>();
 
 if (sceltaUserMenù == 1)
 {
@@ -163,7 +164,7 @@ if (sceltaUserMenù == 1)
             programmaevento.AggiuntaEvento(conferenza);
             generaConferenza = false;
             programmi.Add(conferenza);
-
+            listaConferenza.Add(conferenza);
         }
         catch (FormatException)
         {
@@ -191,13 +192,19 @@ if (sceltaUserMenù == 1)
         {
             StreamWriter fileDaScrivere = File.CreateText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati2.csv");
 
-            fileDaScrivere.WriteLine("titolo,data,capienza massima,posti prenotati");
+            fileDaScrivere.WriteLine("titolo,data,capienza massima,posti prenotati,relatore,prezzo");
 
             foreach (Evento evento in programmi)
             {
+                //stampaevento su csv
+                string stampa = evento.StampCSV();
+                //controllo evento o conferenza
+                if (evento.GetType().ToString() == "Evento")
+                {
+                    stampa += ",nessun Relatore,0";
+                }
 
-                fileDaScrivere.WriteLine(evento.StampCSV());
-
+                fileDaScrivere.WriteLine(stampa);
             }
             fileDaScrivere.Close();
         }
@@ -365,10 +372,12 @@ else if (sceltaUserMenù == 2)
 }
 else if (sceltaUserMenù == 3)
 {
-    StreamReader stream = File.OpenText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati.csv");
+    StreamReader stream = File.OpenText("C:\\Users\\glogh\\source\\repos\\corsoCSharp\\csharp-gestore-eventi\\eventi-formattati2.csv");
 
     List<Evento> eventi = new List<Evento>();
     stream.ReadLine();
+    Evento evento = null;
+    Conferenza conferenza = null;
     while (!stream.EndOfStream)
     {
         try
@@ -378,22 +387,31 @@ else if (sceltaUserMenù == 3)
 
             string[] infoEvento = riga.Split(",");
 
-            //abbaimo 4 informazioni che DEVONO essere correttamente strutturate nel file
-            if (infoEvento.Length == 4)
+            //abbaimo 6 informazioni che DEVONO essere correttamente strutturate nel file
+            if (infoEvento.Length == 6)
             {
                 string titolo = infoEvento[0];
                 DateOnly dataonly = DateOnly.Parse(infoEvento[1]);
                 DateOnly data = dataonly;
                 int postiMassimiCapienza = infoEvento[2] == "" ? 0 : Convert.ToInt32(infoEvento[2]);
                 int postiPrenotati = infoEvento[3] == "" ? 0 : Convert.ToInt32(infoEvento[3]);
+                string relatore = infoEvento[4];
+                double prezzo = Convert.ToDouble(infoEvento[5]);
+                
 
-
-
-                Evento evento = new Evento(titolo, data, postiMassimiCapienza);
+                if (prezzo == 0 && relatore == "nessun Relatore")
+                    evento = new Evento(titolo, data, postiMassimiCapienza);
+                else
+                    conferenza = new Conferenza(titolo, data, postiMassimiCapienza, relatore, prezzo);
                 evento.PrenotaPosti(postiPrenotati);
+                conferenza.PrenotaPosti(postiPrenotati);
 
                 Console.WriteLine(evento.StampaOrdinato());
+                Console.WriteLine(conferenza.StampaOrdinato());
+
                 eventi.Add(evento);
+                eventi.Add(conferenza);
+
             }
         }
         catch (Exception e)

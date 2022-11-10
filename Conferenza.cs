@@ -6,7 +6,7 @@ public class Conferenza : Evento
     private string _relatore;
     private double _prezzo;
 
-    private string Relatore
+    public string Relatore
 
     {
         get
@@ -20,7 +20,7 @@ public class Conferenza : Evento
             _relatore = value;
         }
     }
-    private double Prezzo
+    public double Prezzo
 
     {
         get
@@ -53,5 +53,21 @@ public class Conferenza : Evento
     public override string ToString()
     {
         return Data.ToString("dd/MM/yyyy") + " - " + Titolo + " - " + _relatore + " - " + PrezzoFormattato() + " Euro ";
+    }
+    public override string StampCSV()
+    {
+        return Titolo + ","+_data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza + "," + PostiPrenotati +","+ Relatore + "," + Prezzo;
+
+    }
+    public override string StampaOrdinato()
+    {
+        string stringa = "------ Evento ------\n";
+        stringa += "Titolo:\t" + this.Titolo + "\n";
+        stringa += "Autore:\t" + this._data.ToString("dd/MM/yyyy") + "\n";
+        stringa += "Posti Massimi Capienza:\t" + this.PostiMassimiCapienza + "\n";
+        stringa += "Posti Prenotati:\t" + this.PostiPrenotati + "\n";
+        stringa += "Prezzo:\t" + this.Prezzo + "\n";
+        stringa += "-------------------";
+        return stringa;
     }
 }

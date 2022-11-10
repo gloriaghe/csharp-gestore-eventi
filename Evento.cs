@@ -2,10 +2,10 @@
 
 public class Evento
 {
-    private string _titolo;
-    private DateOnly _data;
-    private int _postiMassimiCapienza;
-    private int _postiPrenotati;
+    protected string _titolo;
+    protected DateOnly _data;
+    protected int _postiMassimiCapienza;
+    protected int _postiPrenotati;
     public DateOnly oggi = DateOnly.FromDateTime(DateTime.Now);
 
     public string Titolo
@@ -88,12 +88,12 @@ public class Evento
         return Titolo+ ","+ _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza+ ","+ PostiPrenotati;
         
     }
-   public string StampCSV()
+   public virtual string StampCSV()
     {
         return Titolo + "," + _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza + "," + PostiPrenotati;
 
     }
-    public string StampaOrdinato()
+    public virtual string StampaOrdinato()
     {
         string stringa = "------ Evento ------\n";
         stringa += "Titolo:\t" + this.Titolo + "\n";
