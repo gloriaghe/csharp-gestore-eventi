@@ -111,7 +111,11 @@ if (sceltaUserMenù == 1)
     DateOnly datascelta = DateOnly.Parse(data1);
     List<Evento> programmiDataSpecifica = programmaevento.DataEventi(datascelta);
 
-    Console.WriteLine(ProgrammaEventi.StampaEventi(programmiDataSpecifica));
+    if (programmiDataSpecifica.Count < 0 || programmiDataSpecifica != null)
+        Console.WriteLine(ProgrammaEventi.StampaEventi(programmiDataSpecifica));
+    else
+        Console.WriteLine("Non ho trovato eventi nella data inserita");
+    Console.WriteLine();
 
     //conferenza
     Console.Write("Ora aggiungi una conferenza:");
@@ -201,7 +205,7 @@ if (sceltaUserMenù == 1)
                 //controllo evento o conferenza
                 if (evento.GetType().ToString() == "Evento")
                 {
-                    stampa += ",nessun Relatore,0";
+                    stampa += ",null,0";
                 }
 
                 fileDaScrivere.WriteLine(stampa);
@@ -399,7 +403,7 @@ else if (sceltaUserMenù == 3)
                 double prezzo = Convert.ToDouble(infoEvento[5]);
 
 
-                if (infoEvento[4] == "nessun Relatore")
+                if (infoEvento[4] == "null")
                 {
                     evento = new Evento(titolo, data, postiMassimiCapienza);
                     evento.PrenotaPosti(postiPrenotati);

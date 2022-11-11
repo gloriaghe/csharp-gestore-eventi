@@ -85,12 +85,12 @@ public class Evento
 
     public override string ToString()
     {
-        return Titolo+ ","+ _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza+ ","+ PostiPrenotati;
+        return _data.ToString("dd/MM/yyyy") + " - " + Titolo;
         
     }
    public virtual string StampCSV()
     {
-        return Titolo + "," + _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza + "," + PostiPrenotati;
+        return Titolo + "," + _data.ToString("dd/MM/yyyy") + "," + PostiMassimiCapienza + "," + PostiPrenotati ;
 
     }
     public virtual string StampaOrdinato()
